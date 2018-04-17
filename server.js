@@ -1,4 +1,4 @@
-// eslint no-console: off
+/* eslint no-console: off */
 const http = require('http');
 const app = require('./lib/app');
 const connect = require('./lib/connect');
@@ -12,5 +12,5 @@ connect(MONGODB_URI);
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
-    console.log('server running on: ', server.address().port)
+    console.log('server running on: ', server.address().port);
 });
