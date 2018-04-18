@@ -14,23 +14,25 @@ describe('Company API', () => {
             street: 'X iPhone St.',
             city: 'Aberdeen',
             zip: '98666',
-            state: 'WA'
+            state: {
+                'enum': []
+            }
         },
         size: 222222,
         isHip: false,
-        keywords: ['ok', 'i', 'guess']
+        keywords: ['ok', 'i', 'guess'],
+        type: 'For-profit'
     };
 
     it('saves a company and gets', () => {
         return request.post('/companies')
             .send(apple)
             .then(({ body }) => {
-                const { _id, __v, joined } = body;
+                const { _id, __v } = body;
                 assert.ok(_id);
                 assert.equal(__v, 0);
-                assert.ok(joined);
                 assert.deepEqual(body, {
-                    _id, __v, joined,
+                    _id, __v,
                     ...apple
                 });
                 apple = body;
