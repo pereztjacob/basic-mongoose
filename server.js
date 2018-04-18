@@ -3,9 +3,9 @@ const http = require('http');
 const app = require('./lib/app');
 const connect = require('./lib/connect');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 27017;
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:3000/companies';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/companies';
 
 connect(MONGODB_URI);
 
