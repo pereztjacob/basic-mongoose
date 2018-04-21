@@ -90,5 +90,14 @@ describe('Company API', () => {
             });
     });
 
+    it('deletes company', () => {
+        return request.del(`/trips/${samsung._id}`)
+            .then(() => {
+                return Company.findById(samsung._id);
+            })
+            .then(found => {
+                assert.isNull(found);
+            });
+    });
 
 });
