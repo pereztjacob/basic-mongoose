@@ -1,6 +1,6 @@
 const { assert } = require('chai');
 const request = require('./request');
-// const Company = require('../../lib/models/Company');
+const Company = require('../../lib/models/Company');
 const { dropCollection } = require('./db');
 
 describe('Company API', () => {
@@ -9,6 +9,23 @@ describe('Company API', () => {
 
     let apple = {
         name: 'Apple',
+        description: 'ok stuff',
+        address: {
+            street: 'X iPhone St.',
+            city: 'Aberdeen',
+            zip: '98666',
+            state: {
+                'enum': []
+            }
+        },
+        size: 222222,
+        isHip: false,
+        keywords: ['ok', 'i', 'guess'],
+        type: 'For-profit'
+    };
+
+    let samsung = {
+        name: 'samsung',
         description: 'ok stuff',
         address: {
             street: 'X iPhone St.',
@@ -36,6 +53,19 @@ describe('Company API', () => {
                     ...apple
                 });
                 apple = body;
+            });
+    });
+
+    const roundTrip = doc => JSON.parse(JSON.stringify(doc.toJSON()));
+
+    it('gets comp by id', () => {
+        return Company.create(samsung).then(roundTrip)
+            .then(saved => {
+                samsung = saved;
+                return request.get(`/companies/${samsung._id}`);
+            })
+            .then(({ body }) => {
+                assert.deepEqual(body, samsung);
             });
     });
 
