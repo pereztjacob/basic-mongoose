@@ -69,7 +69,14 @@ describe('Company API', () => {
             });
     });
 
-    it('update trip', () => {
+    it('get all', () => {
+        return request.get('/companies')
+            .then(({ body }) => {
+                assert.deepEqual(body, [apple, samsung]);
+            });
+    });
+
+    it('update company', () => {
         samsung.description = 'fishers';
 
         return request.put(`/companies/${samsung._id}`)
