@@ -69,5 +69,19 @@ describe('Company API', () => {
             });
     });
 
+    it('update trip', () => {
+        samsung.description = 'fishers';
+
+        return request.put(`/companies/${samsung._id}`)
+            .send(samsung)
+            .then(({ body }) => {
+                assert.deepEqual(body, samsung);
+                return Company.findById(samsung._id).then(roundTrip);
+            })
+            .then(updated => {
+                return assert.deepEqual(updated, samsung);
+            });
+    });
+
 
 });
