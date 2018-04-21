@@ -91,12 +91,20 @@ describe('Company API', () => {
     });
 
     it('deletes company', () => {
-        return request.del(`/trips/${samsung._id}`)
+        return request.delete(`/companies/${samsung._id}`)
             .then(() => {
                 return Company.findById(samsung._id);
             })
             .then(found => {
                 assert.isNull(found);
+            });
+    });
+
+    it('returns 404 when needed', () => {
+        return request.get(`/companies/${samsung._id}`)
+            .then(response => {
+                assert.equal(response.status, 404);
+                assert.equal(response.body.error, `company with id ${samsung._id} does not exist`);
             });
     });
 
